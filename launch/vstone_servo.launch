@@ -1,0 +1,21 @@
+<launch>
+
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find gaze_arm)/urdf/gaze_arm.urdf.xacro'"/>
+
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model gaze_arm" />
+
+  <node name="controller_spawner1" pkg="controller_manager"
+        type="spawner" respawn="false"
+        output="screen" ns="/gaze_arm"
+        args="tip_joint_position_controller1 joint_state_controller1"/>
+
+  <node name="controller_spawner2" pkg="controller_manager"
+        type="spawner" respawn="false"
+        output="screen" ns="/gaze_arm"
+        args="tip_joint_position_controller2 joint_state_controller2"/>
+
+  <node name="tip_camera_view" pkg="image_view"
+        type="image_view" respawn="false"
+        output="screen" args="image:=/gaze_arm/tip_camera/image_raw"/>
+  <node name="vstone_servo" pkg="robovie">
+</launch>
