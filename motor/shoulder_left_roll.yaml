@@ -1,0 +1,5 @@
+shoulder_left_roll:
+  id: 0x0D
+  init: 1020
+  max: 2040
+  min: 1040

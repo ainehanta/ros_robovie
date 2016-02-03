@@ -1,0 +1,5 @@
+neck_roll:
+  id: 0x1A
+  min: 1640
+  max: 2440
+  init: 2040

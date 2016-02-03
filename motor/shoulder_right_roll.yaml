@@ -1,0 +1,5 @@
+shoulder_right_roll:
+  id: 0x13
+  init: 3200
+  max: 3200
+  min: 2200

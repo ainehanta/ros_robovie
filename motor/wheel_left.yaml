@@ -1,0 +1,5 @@
+wheel_left:
+  id: 0x04
+  min: 1024
+  max: 3072
+  init: 2048

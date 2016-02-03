@@ -1,0 +1,5 @@
+shoulder_left_pitch:
+	id: 0x0C
+	init: 2660
+	max: 3760
+	min: 460

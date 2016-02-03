@@ -1,0 +1,5 @@
+shoulder_right_pitch:
+	id: 0x12
+	init: 1600
+	max: 3600
+	min: 300

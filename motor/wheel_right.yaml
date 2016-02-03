@@ -1,0 +1,5 @@
+wheel_right:
+  id: 0x0A
+  min: 1024
+  max: 3072
+  init: 2048

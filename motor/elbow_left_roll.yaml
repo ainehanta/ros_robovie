@@ -1,0 +1,5 @@
+elbow_left_pitch:
+  id: 0x0F
+  init: 1020
+  max: 2060
+  min: 1020

@@ -1,0 +1,5 @@
+neck_pitch:
+  id: 0x19
+  min: 1640
+  max: 2280
+  init: 2000
