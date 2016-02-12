@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<robot name="robovie">
+
+  <link name="base_link">
+  </link>
+
+  <link name="shoulder_link" type="fixed">
+  </link>
+
+  <joint name="neck_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="shoulder_link"/>
+    <origin xyz="0 0 0.71" rpy="0 0 0" />
+  </joint>
+
+  <!-- 右腕 -->
+
+  <joint name="right_shoulder" type="fixed">
+    <parent link="shoulder_link"/>
+    <child link="right_arm_link1"/>
+    <origin xyz="0 0.19 0" rpy="-1 0 0" />
+  </joint>
+
+  <link name="right_arm_link1">
+  </link>
+
+  <joint name="right_elbow" type="fixed">
+    <parent link="right_arm_link1"/>
+    <child link="right_arm_link2"/>
+    <origin xyz="0 0.11 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="right_arm_link2">
+  </link>
+
+  <joint name="right_wrist" type="fixed">
+    <parent link="right_arm_link2"/>
+    <child link="right_arm_link3"/>
+    <origin xyz="0 0.11 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="right_arm_link3">
+  </link>
+
+  <!-- 左腕 -->
+
+  <joint name="left_shoulder" type="fixed">
+    <parent link="shoulder_link"/>
+    <child link="left_arm_link1"/>
+    <origin xyz="0 -0.19 0" rpy="4.71238898038 0 0" />
+  </joint>
+
+  <link name="left_arm_link1">
+  </link>
+
+  <joint name="left_elbow" type="fixed">
+    <parent link="left_arm_link1"/>
+    <child link="left_arm_link2"/>
+    <origin xyz="0 0.11 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="left_arm_link2">
+  </link>
+
+  <joint name="left_wrist" type="fixed">
+    <parent link="left_arm_link2"/>
+    <child link="left_arm_link3"/>
+    <origin xyz="0 0.11 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="left_arm_link3">
+  </link>
+
+</robot>

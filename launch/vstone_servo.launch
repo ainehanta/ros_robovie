@@ -1,21 +1,22 @@
 <launch>
+  <node ns="robovie/vstone_servo" pkg="vstone_servo" name="serial_controller" type="serial_controller.py">
+    <param name="debug" value="true" />
+  </node>
 
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find gaze_arm)/urdf/gaze_arm.urdf.xacro'"/>
+  <node ns="robovie/vstone_servo" name="controller_spawner" pkg="vstone_servo" type="controller_spawner.py">
+    <rosparam command="load" param="config" file="$(find robovie)/motor/elbow_left_pitch.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/elbow_left_roll.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/elbow_right_pitch.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/elbow_right_roll.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/neck_pitch.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/neck_roll.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/neck_yaw.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/shoulder_left_pitch.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/shoulder_left_roll.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/shoulder_right_pitch.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/shoulder_right_roll.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/wheel_left.yaml" />
+    <rosparam command="load" param="config" file="$(find robovie)/motor/wheel_right.yaml" />
+  </node>
 
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model gaze_arm" />
-
-  <node name="controller_spawner1" pkg="controller_manager"
-        type="spawner" respawn="false"
-        output="screen" ns="/gaze_arm"
-        args="tip_joint_position_controller1 joint_state_controller1"/>
-
-  <node name="controller_spawner2" pkg="controller_manager"
-        type="spawner" respawn="false"
-        output="screen" ns="/gaze_arm"
-        args="tip_joint_position_controller2 joint_state_controller2"/>
-
-  <node name="tip_camera_view" pkg="image_view"
-        type="image_view" respawn="false"
-        output="screen" args="image:=/gaze_arm/tip_camera/image_raw"/>
-  <node name="vstone_servo" pkg="robovie">
 </launch>

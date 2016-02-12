@@ -1,74 +1,116 @@
 <?xml version="1.0"?>
 <robot name="robovie">
-
   <link name="base_link">
   </link>
 
-  <link name="shoulder_link" type="fixed">
-  </link>
-
-  <joint name="neck_joint" type="fixed">
+  <joint name="shoulder_joint" type="fixed">
     <parent link="base_link"/>
     <child link="shoulder_link"/>
     <origin xyz="0 0 0.71" rpy="0 0 0" />
   </joint>
 
-  <!-- 右腕 -->
+  <link name="shoulder_link">
+  </link>
 
-  <joint name="right_shoulder" type="fixed">
+  <!-- right arm -->
+  <joint name="right_shoulder_pitch" type="revolute">
     <parent link="shoulder_link"/>
-    <child link="right_arm_link1"/>
-    <origin xyz="0 0.19 0" rpy="-1 0 0" />
+    <child link="right_shoulder_link"/>
+    <origin xyz="0 0.19 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.57" upper="3.14" effort="0.5293" velocity="6.159937255" />
+    <friction friction="0.01" />
+    <dynamics damping="0.4" />
   </joint>
 
-  <link name="right_arm_link1">
+  <link name="right_shoulder_link">
   </link>
 
-  <joint name="right_elbow" type="fixed">
-    <parent link="right_arm_link1"/>
-    <child link="right_arm_link2"/>
+  <joint name="right_shoulder_roll" type="revolute">
+    <parent link="right_shoulder_link"/>
+    <child link="right_arm_link_1"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.57" upper="1.39626" effort="0.5293" velocity="6.159937255" />
+    <dynamics damping="0.4" />
+  </joint>
+
+  <link name="right_arm_link_1">
+  </link>
+
+  <joint name="right_elbow_pitch" type="revolute">
+    <parent link="right_arm_link_1"/>
+    <child link="right_elbow_link"/>
     <origin xyz="0 0.11 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.57" upper="1.57" effort="0.5293" velocity="6.159937255" />
+    <dynamics damping="0.4" />
   </joint>
 
-  <link name="right_arm_link2">
+  <link name="right_elbow_link">
   </link>
 
-  <joint name="right_wrist" type="fixed">
-    <parent link="right_arm_link2"/>
-    <child link="right_arm_link3"/>
-    <origin xyz="0 0.11 0" rpy="0 0 0" />
+  <joint name="right_elbow_roll" type="revolute">
+    <parent link="right_elbow_link"/>
+    <child link="right_arm_link_2"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-2.0944" upper="0" effort="0.5293" velocity="6.159937255" />
+    <dynamics damping="0.4" />
   </joint>
 
-  <link name="right_arm_link3">
+  <link name="right_arm_link_2">
   </link>
 
-  <!-- 左腕 -->
+  <!-- left arm -->
 
-  <joint name="left_shoulder" type="fixed">
+  <joint name="left_shoulder_pitch" type="revolute">
     <parent link="shoulder_link"/>
-    <child link="left_arm_link1"/>
-    <origin xyz="0 -0.19 0" rpy="4.71238898038 0 0" />
+    <child link="left_shoulder_link"/>
+    <origin xyz="0 -0.19 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.57" upper="3.14" effort="0.5293" velocity="6.159937255" />
+    <friction friction="0.01" />
+    <dynamics damping="0.4" />
   </joint>
 
-  <link name="left_arm_link1">
+  <link name="left_shoulder_link">
   </link>
 
-  <joint name="left_elbow" type="fixed">
-    <parent link="left_arm_link1"/>
-    <child link="left_arm_link2"/>
-    <origin xyz="0 0.11 0" rpy="0 0 0" />
+  <joint name="left_shoulder_roll" type="revolute">
+    <parent link="left_shoulder_link"/>
+    <child link="left_arm_link_1"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-1.57" upper="1.39626" effort="0.5293" velocity="6.159937255" />
+    <dynamics damping="0.4" />
   </joint>
 
-  <link name="left_arm_link2">
+  <link name="left_arm_link_1">
   </link>
 
-  <joint name="left_wrist" type="fixed">
-    <parent link="left_arm_link2"/>
-    <child link="left_arm_link3"/>
+  <joint name="left_elbow_pitch" type="revolute">
+    <parent link="left_arm_link_1"/>
+    <child link="left_elbow_link"/>
     <origin xyz="0 0.11 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.57" upper="1.57" effort="0.5293" velocity="6.159937255" />
+    <dynamics damping="0.4" />
   </joint>
 
-  <link name="left_arm_link3">
+  <link name="left_elbow_link">
+  </link>
+
+  <joint name="left_elbow_roll" type="revolute">
+    <parent link="left_elbow_link"/>
+    <child link="left_arm_link_2"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-2.0944" upper="0" effort="0.5293" velocity="6.159937255" />
+    <dynamics damping="0.4" />
+  </joint>
+
+  <link name="left_arm_link_2">
   </link>
 
 </robot>
