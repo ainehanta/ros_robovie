@@ -1,22 +1,5 @@
 <launch>
   <node ns="robovie/vstone_servo" pkg="vstone_servo" name="serial_controller" type="serial_controller.py">
-    <param name="debug" value="true" />
+    <param name="debug" value="False" />
   </node>
-
-  <node ns="robovie/vstone_servo" name="controller_spawner" pkg="vstone_servo" type="controller_spawner.py">
-    <rosparam command="load" param="config" file="$(find robovie)/motor/elbow_left_pitch.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/elbow_left_roll.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/elbow_right_pitch.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/elbow_right_roll.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/neck_pitch.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/neck_roll.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/neck_yaw.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/shoulder_left_pitch.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/shoulder_left_roll.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/shoulder_right_pitch.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/shoulder_right_roll.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/wheel_left.yaml" />
-    <rosparam command="load" param="config" file="$(find robovie)/motor/wheel_right.yaml" />
-  </node>
-
 </launch>
