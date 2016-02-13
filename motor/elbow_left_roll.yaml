@@ -1,4 +1,4 @@
-elbow_left_pitch:
+elbow_left_roll:
   id: 0x0F
   init: 1020
   max: 2060

@@ -1,4 +1,4 @@
-elbow_right_pitch:
+elbow_right_roll:
   id: 0x15
   init: 3100
   max: 3100
