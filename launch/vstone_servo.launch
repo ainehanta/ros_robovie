@@ -1,5 +1,5 @@
 <launch>
   <node ns="robovie/vstone_servo" pkg="vstone_servo" name="serial_controller" type="serial_controller.py">
-    <param name="debug" value="False" />
+    <param name="debug" value="True" />
   </node>
 </launch>

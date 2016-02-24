@@ -1,75 +1,56 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
-import roslib; roslib.load_manifest('gaze_arm')
 import rospy
 
-from geometry_msgs.msg import Twist
-from std_msgs.msg import Float64
-from ros_gpio.srv import *
+from sensor_msgs.msg import JointState
+from std_msgs.msg import UInt16
 
+motor_params = None
+shoulder_left_roll_publisher = None
 
-angles = [0., 0.]
-gazebo_joint1 = None
-gazebo_joint2 = None
+def get_index_from_name(msg, name):
+    return msg.name.index(name)
 
 def callback(msg):
-  global angles
-  angles[0] = angles[0] + msg.linear.x/10.0
-  angles[1] = angles[1] + msg.angular.z/10.0
+    position_rad = msg.position[get_index_from_name(msg, 'left_shoulder_roll')]
 
-  if angles[0] < -1.57:
-    angles[0] = -1.57
-  if 1.57 < angles[0]:
-    angles[0] = 1.57
-  if angles[1] < -1.57:
-    angles[1] = -1.57
-  if 1.57 < angles[1]:
-    angles[1] = 1.57
+    max_position = motor_params['shoulder_left_roll']['max']
+    min_position = motor_params['shoulder_left_roll']['min']
 
-  rospy.loginfo("Angles %f, %f" % (angles[0], angles[1]))
+    min_rad = motor_params['shoulder_left_roll']['min_rad']
+    max_rad = motor_params['shoulder_left_roll']['max_rad']
 
-  global gazebo_joint1, gazebo_joint2
-  gazebo_joint1.publish(angles[0])
-  gazebo_joint2.publish(angles[1])
+    position = ((position_rad - min_rad) / (max_rad - min_rad)) * (max_position - min_position) + min_position
 
-  write_pwm = rospy.ServiceProxy("/write_pwm", WritePwm)
-  write_pwm(5, 1.5/20.0 - angles[0]/3.1415*3.*0.5/20.0)
-  write_pwm(6, 1.5/20.0 + angles[1]/3.1415*3.*0.5/20.0)
+    # shoulder_left_roll_publisher.pub(postion)
+
+    rospy.loginfo("min_rad:%lf, max_rad:%lf, position:%d" % (min_rad, max_rad, position))
+    # for motor_status in zip(msg.name, msg.position):
+    #     rospy.loginfo(motor_status)
+
+# def base_callback(motor_config, msg):
+#     target = msg.data
+#     target = min(target, motor_config['max'])
+#     target = max(target, motor_config['min'])
+#     servo_target_msg = ServoTarget(sid = motor_config['id'], target_position = target)
+#     servo_target_pub.publish(servo_target_msg)
+
+def get_callback(motor_config):
+    return lambda msg: base_callback(motor_config, msg)
 
 def controller():
-  rospy.init_node("controller")
+  rospy.init_node("robovie_controller")
 
-  global gazebo_joint1, gazebo_joint2
-  gazebo_joint1 = rospy.Publisher('/gaze_arm/tip_joint_position_controller1/command', Float64, queue_size=100)
-  gazebo_joint2 = rospy.Publisher('/gaze_arm/tip_joint_position_controller2/command', Float64, queue_size=100)
+  global motor_params
+  motor_params = rospy.get_param('/robovie/vstone_servo/controller_spawner/config')
 
-  initPWM()
+  global shoulder_left_roll_publisher
+  shoulder_left_roll_publisher = rospy.Publisher('vstone_servo/shoulder_left_roll_controller', UInt16, queue_size=10)
 
-  rospy.Subscriber("/cmd_vel", Twist, callback)
+  rospy.Subscriber("/joint_states", JointState, callback)
+
   rospy.spin()
-
-  endPWM()
-
-def initPWM():
-  rospy.wait_for_service("/open_pwm")
-  open_pwm = rospy.ServiceProxy("/open_pwm", OpenPwm)
-  open_pwm(5)
-  open_pwm(6)
-  set_pwm_period = rospy.ServiceProxy("/set_pwm_period", SetPwmPeriod)
-  set_pwm_period(5, 20000 * 20000/21800)
-  set_pwm_period(6, 20000 * 20000/21800)
-  start_pwm = rospy.ServiceProxy("/start_pwm", StartPwm)
-  start_pwm(5)
-  start_pwm(6)
-
-def endPWM():
-  stop_pwm = rospy.ServiceProxy("/stop_pwm", StopPwm)
-  stop_pwm(5)
-  stop_pwm(6)
-  close_pwm = rospy.ServiceProxy("/close_pwm", CLosePwm)
-  close_pwm(5)
-  close_pwm(6)
 
 if __name__ == "__main__":
   try:

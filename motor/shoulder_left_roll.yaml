@@ -1,5 +1,7 @@
 shoulder_left_roll:
   id: 0x0D
-  init: 1020
-  max: 2040
-  min: 1040
+  init: 900
+  max: 3000
+  min: 900
+  max_rad: 4.53786
+  min_rad: 1.57
