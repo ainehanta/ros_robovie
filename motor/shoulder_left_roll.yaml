@@ -3,5 +3,5 @@ shoulder_left_roll:
   init: 900
   max: 3000
   min: 900
-  max_rad: 4.53786
-  min_rad: 1.57
+  max_rad: 7.68
+  min_rad: 4.71

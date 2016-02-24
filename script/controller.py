@@ -7,7 +7,7 @@ from sensor_msgs.msg import JointState
 from std_msgs.msg import UInt16
 
 motor_params = None
-shoulder_left_roll_publisher = None
+shoulder_left_roll_pub = None
 
 def get_index_from_name(msg, name):
     return msg.name.index(name)
@@ -23,7 +23,7 @@ def callback(msg):
 
     position = ((position_rad - min_rad) / (max_rad - min_rad)) * (max_position - min_position) + min_position
 
-    # shoulder_left_roll_publisher.pub(postion)
+    shoulder_left_roll_pub.publish(position)
 
     rospy.loginfo("min_rad:%lf, max_rad:%lf, position:%d" % (min_rad, max_rad, position))
     # for motor_status in zip(msg.name, msg.position):
@@ -45,8 +45,8 @@ def controller():
   global motor_params
   motor_params = rospy.get_param('/robovie/vstone_servo/controller_spawner/config')
 
-  global shoulder_left_roll_publisher
-  shoulder_left_roll_publisher = rospy.Publisher('vstone_servo/shoulder_left_roll_controller', UInt16, queue_size=10)
+  global shoulder_left_roll_pub
+  shoulder_left_roll_pub = rospy.Publisher('/robovie/vstone_servo/shoulder_left_roll_controller', UInt16, queue_size=10000)
 
   rospy.Subscriber("/joint_states", JointState, callback)
 
